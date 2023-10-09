@@ -1,0 +1,50 @@
+{
+  "name": "@bot-shiki/koishi-plugin-solitaire",
+  "description": "Touhou Solitaire Game",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "out",
+    "dist"
+  ],
+  "author": "Shigma <shigma10826@gmail.com>",
+  "license": "AGPL-3.0",
+  "homepage": "https://bot.shig.ma/solitaire/",
+  "koishi": {
+    "description": {
+      "en": "Touhou Solitaire Game",
+      "zh": "东方词汇接龙游戏"
+    }
+  },
+  "keywords": [
+    "bot",
+    "chatbot",
+    "koishi",
+    "plugin",
+    "game",
+    "word",
+    "solitaire",
+    "touhou"
+  ],
+  "scripts": {
+    "build": "atsc -b",
+    "lint": "eslint --ext=ts --cache"
+  },
+  "peerDependencies": {
+    "koishi": "^4.15.0"
+  },
+  "devDependencies": {
+    "@koishijs/eslint-config": "^1.0.4",
+    "@koishijs/plugin-help": "^2.3.2",
+    "@types/node": "^20.4.2",
+    "atsc": "^1.2.2",
+    "esbuild": "^0.15.15",
+    "esbuild-register": "^3.4.1",
+    "eslint": "^8.45.0",
+    "koishi": "^4.15.0",
+    "simplify-chinese": "^1.2.0",
+    "typescript": "^5.1.6"
+  }
+}
