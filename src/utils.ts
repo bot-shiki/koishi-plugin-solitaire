@@ -5,7 +5,7 @@ import { Time } from 'koishi'
 
 // defineEnumProperty(Channel.Flag, 'official', 1 << 4)
 
-export const libDir = resolve(__dirname, '../data')
+export const libDir = resolve(__dirname, '../words')
 export const outDir = resolve(__dirname, '../out')
 
 const cache: Record<string, any> = {}

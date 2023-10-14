@@ -1,5 +1,6 @@
-import { Context, intersection, Random, segment, Session, Time, User } from 'koishi'
+import { Context, intersection, Random, segment, Time, User } from 'koishi'
 import { endTones, getTone, getToneDict, loadCache, startTones, stripWord, wordMap } from './dict'
+import { simplify } from 'simplify-chinese'
 import {} from '@koishijs/plugin-help'
 import {} from 'koishi-plugin-rate-limit'
 import {} from './database'
@@ -23,7 +24,7 @@ export type SolitaireField = typeof solitaireFields[number]
 
 export interface State {
   channelId: string
-  send: Session['send']
+  send(content: string): Promise<void>
   /** 接龙发起者 */
   initiator: string
   /** 当前可用的尾音 */
@@ -88,7 +89,8 @@ export function apply(ctx: Context) {
 
   ctx
     .command('solitaire [words:text]', '东方词汇接龙')
-    .alias('jl', 'slt')
+    .alias('jl')
+    .alias('slt')
     .userFields(solitaireFields)
     .shortcut('接龙', { fuzzy: true })
     .shortcut('接龙停止', { options: { end: true } })
@@ -144,7 +146,7 @@ export function apply(ctx: Context) {
         return '调用次数已达上限。'
       }
 
-      let word = stripWord(words.join(''))
+      let word = simplify(stripWord(words.join('')))
 
       // --info
       if (options.info) {
@@ -224,7 +226,9 @@ export function apply(ctx: Context) {
           words: new Set<string>(),
           initiator: session.userId,
           participants: {},
-          send: session.send.bind(session),
+          send: async (...args) => {
+            await session.send(...args)
+          },
           arcade: options.arcade,
           reverse: options.reverse,
           strict: options.strict,

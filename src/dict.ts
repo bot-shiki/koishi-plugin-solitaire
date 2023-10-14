@@ -2,7 +2,7 @@ import { deduplicate } from 'koishi'
 import { simplify } from 'simplify-chinese'
 import { loadLibrary, outDir } from './utils'
 
-const pinyinMap: Record<string, string> = require('../data/chinese/pinyin')
+const pinyinMap: Record<string, string> = require('./data/pinyin')
 const charMap: Record<string, string> = {}
 
 for (const pinyin in pinyinMap) {
@@ -16,7 +16,7 @@ for (const pinyin in pinyinMap) {
   }
 }
 
-const PHONETIC = require('../data/chinese/phonetic')
+const PHONETIC = require('./data/phonetic')
 const RE_PHONETIC = new RegExp(`([${Object.keys(PHONETIC).join('')}])`, 'g')
 
 export function getPinyin(char: string) {
@@ -65,8 +65,8 @@ function getMusicWords(source: string): [string, string][] {
   return (words.map(w => [w, stripWord(w)]) as [string, string][]).filter(([, s]) => !s.match(/^\w|\w$/))
 }
 
-export const startTones: Record<string, string> = require('../data/chinese/leading')
-export const endTones: Record<string, string> = require('../data/chinese/trailing')
+export const startTones: Record<string, string> = require('./data/leading')
+export const endTones: Record<string, string> = require('./data/trailing')
 export const unknownStartTones: string[][] = []
 export const unknownEndTones: string[][] = []
 
@@ -101,7 +101,7 @@ interface Library {
 }
 
 export function loadFile(file: string) {
-  loadLibrary<Library[]>(`words/${file}`).forEach(({ name, items }) => {
+  loadLibrary<Library[]>(file).forEach(({ name, items }) => {
     items.forEach((item) => {
       item = simplify(item)
       if (name.startsWith('符卡')) {
